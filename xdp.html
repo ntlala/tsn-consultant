@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Book-Style Event Gallery</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <style>
+      .carousel {
+        perspective: 1000px;
+        overflow: hidden;
+      }
+
+      .carousel-inner {
+        transform-style: preserve-3d;
+      }
+
+      .carousel-item {
+        height: 600px;
+        position: relative;
+        backface-visibility: hidden;
+      }
+
+      .carousel-item.active {
+        animation: pageOpen 1.5s ease-out forwards;
+      }
+
+      .carousel-item.carousel-item-prev {
+        animation: pageClose 1.5s ease-out forwards;
+      }
+
+      @keyframes pageOpen {
+        from {
+          transform: rotateY(-180deg);
+          opacity: 0;
+        }
+        to {
+          transform: rotateY(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes pageClose {
+        from {
+          transform: rotateY(0);
+          opacity: 1;
+        }
+        to {
+          transform: rotateY(180deg);
+          opacity: 0;
+        }
+      }
+
+      .event-overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(transparent, rgba(0, 0, 0, 0.9));
+        color: white;
+        padding: 3rem;
+        opacity: 0;
+        transform: translateY(50px);
+        animation: fadeInUp 1s ease-out 0.5s forwards;
+      }
+
+      @keyframes fadeInUp {
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .carousel-item img {
+        object-fit: cover;
+        height: 100%;
+        width: 100%;
+        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .carousel-indicators {
+        gap: 8px;
+        bottom: 2rem;
+      }
+
+      .carousel-indicators [data-bs-target] {
+        width: 12px;
+        height: 12px;
+        border-radius: 50%;
+        background-color: rgba(255, 255, 255, 0.5);
+        border: none;
+        transition: all 0.5s ease;
+      }
+
+      .carousel-indicators .active {
+        width: 35px;
+        background-color: #e61e4d;
+        border-radius: 10px;
+      }
+
+      .event-title {
+        color: #e61e4d;
+        font-size: 3rem;
+        font-weight: bold;
+        margin-bottom: 1.5rem;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      }
+
+      .event-details {
+        font-size: 1.2rem;
+        line-height: 1.6;
+      }
+
+      .custom-arrow {
+        position: absolute;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 60px;
+        height: 60px;
+        background: rgba(255, 255, 255, 0.1);
+        border: none;
+        border-radius: 50%;
+        z-index: 10;
+        cursor: pointer;
+        transition: all 0.3s ease;
+        backdrop-filter: blur(5px);
+      }
+
+      .custom-arrow:hover {
+        background: rgba(230, 30, 77, 0.8);
+        transform: translateY(-50%) scale(1.1);
+      }
+
+      .custom-arrow-left {
+        left: 2rem;
+      }
+
+      .custom-arrow-right {
+        right: 2rem;
+      }
+
+      .arrow-icon {
+        width: 24px;
+        height: 24px;
+        border-top: 3px solid white;
+        border-right: 3px solid white;
+        display: inline-block;
+      }
+
+      .arrow-left {
+        transform: rotate(-135deg);
+      }
+
+      .arrow-right {
+        transform: rotate(45deg);
+      }
+
+      .page-number {
+        position: absolute;
+        bottom: 2rem;
+        font-size: 1.2rem;
+        color: white;
+        z-index: 10;
+      }
+
+      .page-number-left {
+        left: 2rem;
+      }
+
+      .page-number-right {
+        right: 2rem;
+      }
+    </style>
+  </head>
+  <body class="bg-black">
+    <div
+      id="eventCarousel"
+      class="carousel slide"
+      data-bs-ride="carousel"
+      data-bs-interval="30000"
+    >
+      <ol class="carousel-indicators">
+        <li
+          data-bs-target="#eventCarousel"
+          data-bs-slide-to="0"
+          class="active"
+        ></li>
+        <li data-bs-target="#eventCarousel" data-bs-slide-to="1"></li>
+        <li data-bs-target="#eventCarousel" data-bs-slide-to="2"></li>
+      </ol>
+
+      <div class="carousel-inner">
+        <!-- Event 1 -->
+        <div class="carousel-item active">
+          <img src="https://via.placeholder.com/1920x1080" alt="Event 1" />
+          <div class="event-overlay">
+            <h2 class="event-title">Innovation Summit 2024</h2>
+            <div class="event-details">
+              <p class="mb-3">March 15, 2024</p>
+              <p class="mb-3">Speaker: John Smith</p>
+              <p class="mb-3">Location: Tech Hub</p>
+              <p>
+                Join us for our annual tech innovation summit where industry
+                leaders share insights.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Event 2 -->
+        <div class="carousel-item">
+          <img src="https://via.placeholder.com/1920x1080" alt="Event 2" />
+          <div class="event-overlay">
+            <h2 class="event-title">Web Development Conference</h2>
+            <div class="event-details">
+              <p class="mb-3">April 20, 2024</p>
+              <p class="mb-3">Speaker: Jane Doe</p>
+              <p class="mb-3">Location: Digital Center</p>
+              <p>
+                Exploring the future of web technologies and development
+                practices.
+              </p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Event 3 -->
+        <div class="carousel-item">
+          <img src="https://via.placeholder.com/1920x1080" alt="Event 3" />
+          <div class="event-overlay">
+            <h2 class="event-title">AI Workshop Series</h2>
+            <div class="event-details">
+              <p class="mb-3">May 10, 2024</p>
+              <p class="mb-3">Speaker: Dr. Sarah Chen</p>
+              <p class="mb-3">Location: Innovation Lab</p>
+              <p>
+                Deep dive into artificial intelligence and machine learning
+                applications.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Custom Navigation Arrows -->
+      <button
+        class="custom-arrow custom-arrow-left"
+        type="button"
+        data-bs-target="#eventCarousel"
+        data-bs-slide="prev"
+      >
+        <span class="arrow-icon arrow-left"></span>
+      </button>
+      <button
+        class="custom-arrow custom-arrow-right"
+        type="button"
+        data-bs-target="#eventCarousel"
+        data-bs-slide="next"
+      >
+        <span class="arrow-icon arrow-right"></span>
+      </button>
+
+      <!-- Page Numbers -->
+      <div class="page-number page-number-left">01</div>
+      <div class="page-number page-number-right">/ 03</div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        const carousel = new bootstrap.Carousel(
+          document.getElementById("eventCarousel"),
+          {
+            interval: 30000, // 30 seconds
+            pause: "hover",
+            wrap: true,
+          }
+        );
+
+        // Update page numbers
+        const leftPageNumber = document.querySelector(".page-number-left");
+        document
+          .getElementById("eventCarousel")
+          .addEventListener("slide.bs.carousel", function (event) {
+            let currentPage = (event.to + 1).toString().padStart(2, "0");
+            leftPageNumber.textContent = currentPage;
+          });
+
+        // Add sound effect on page turn (optional)
+        document
+          .getElementById("eventCarousel")
+          .addEventListener("slide.bs.carousel", function () {
+            // Uncomment below lines if you want to add page turn sound
+            // const pageSound = new Audio('path-to-page-turn-sound.mp3');
+            // pageSound.play();
+          });
+      });
+    </script>
+  </body>
+</html>
